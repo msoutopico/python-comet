@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "python-comet"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Souto Pico <m.soutopico@gmail.com>"]
+readme = "README.md"
+packages = [{include = "python_comet"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
