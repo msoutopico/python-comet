@@ -1,5 +1,5 @@
 
-import os
+import os, sys
 from rich import print
 
 import comet_ml
@@ -7,7 +7,7 @@ import comet_ml
 from dataclasses import dataclass
 from typing import Optional
 
-import comet
+# import comet
 import datasets
 import torch
 import evaluate
@@ -18,12 +18,14 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 
-api_key = os.getenv("API_KEY")
-experiment = comet_ml.Experiment(
-    api_key=api_key,
-    project_name="test"
-)
-
+api_key = os.getenv("COMET_API_KEY")
+try:
+    experiment = comet_ml.Experiment(
+        api_key=api_key,
+        project_name="test"
+    )
+except:
+    print("error")
 # experiment = comet_ml.Experiment(api_key=api_key)
 
 
@@ -31,7 +33,12 @@ experiment = comet_ml.Experiment(
 # Choose your model from Hugging Face Hub
 # model_path = download_model("Unbabel/XCOMET-XL")
 # or for example:
-model_path = download_model("Unbabel/wmt22-comet-da")
+model_path = download_model("Unbabel/wmt22-cometkiwi-da")
+# login to hf first
+# bash setup.sh
+# huggingface-cli login --token $HUGGINGFACE_TOKEN
+# https://huggingface.co/Unbabel/wmt22-cometkiwi-da
+
 
 # Load the model checkpoint:
 model = load_from_checkpoint(model_path)
@@ -41,13 +48,13 @@ model = load_from_checkpoint(model_path)
 data = [
     {
         "src": "10 到 15 分钟可以送到吗",
-        "mt": "Can I receive my food in 10 to 15 minutes?",
-        "ref": "Can it be delivered between 10 to 15 minutes?"
+        "mt": "Can I receive my food in 10 to 15 minutes?"
+#        "ref": "Can it be delivered between 10 to 15 minutes?"
     },
     {
         "src": "Pode ser entregue dentro de 10 a 15 minutos?",
-        "mt": "Can you send it for 10 to 15 minutes?",
-        "ref": "Can it be delivered between 10 to 15 minutes?"
+        "mt": "Can you send it for 10 to 15 minutes?"
+#        "ref": "Can it be delivered between 10 to 15 minutes?"
     }
 ]
 
